@@ -55,14 +55,14 @@
         </div>
         <div class="sticky bottom-0 z-10 p-2 bg-gray-800">
             <div class="flex flex-col gap-4 items-center rounded-xl px-2 py-2">
-                {% comment %} <form id="chat_message_form" class="w-full"
+                <form id="chat_message_form" class="w-full"
                     hx-ext="ws"
                     ws-connect="/ws/chatroom/{{ chatroom_name }}"
                     ws-send 
                     _="on htmx:wsAfterSend reset() me">
                     {% csrf_token %}
                     {{ form }}
-                </form> {% endcomment %}
+                </form> 
                 {% comment %} <form id="chat_file_form" enctype="multipart/form-data" class="flex items-center w-full" 
                     hx-post="{% url 'chat-file-upload' chat_group.group_name %}"
                     hx-target="#chat_messages"
@@ -72,14 +72,14 @@
                     <input type="file" name="file" id="id_file" class="!bg-transparent text-gray-400">
                     <button type="submit" class="whitespace-nowrap !text-sm !py-3 !px-4 h-fit">Submit File</button>
                 </form> {% endcomment %}
-                <form id="chat_message_form"  class="w-full"
+                {% comment %} <form id="chat_message_form"  class="w-full"
                     hx-ext="ws"
-                    ws-connect="/ws/chatroom/group-chat1"
+                    ws-connect="/ws/chatroom/{{ chatroom_name }}"
                     ws-send
                     _="on htmx:wsAfterSend reset() me">
                     {% csrf_token %}
                     {{ form }}
-                </form>
+                </form> {% endcomment %}
             </div>
         </div>
     </div>
