@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 import shortuuid
+from PIL import Image
+import os
 
 # Create your models here.
 class chat_group(models.Model):
@@ -16,13 +18,34 @@ class chat_group(models.Model):
 class group_message(models.Model):
     group = models.ForeignKey(chat_group, related_name="chat_messages", on_delete=models.CASCADE)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
-    content = models.TextField(max_length=1000)
+    content = models.CharField(max_length=1000, blank=True, null=True)
+    file = models.FileField(upload_to="files/", blank=True, null=True)
     timestamp = models.DateTimeField(auto_now_add=True)
 
+    @property
+    def filename(self):
+        if self.file:
+            return os.path.basename(self.file.name)
+        else:
+            return None
+
     def __str__(self):
-        return f"{self.author.username} : {self.content}"
+        if self.content:
+            return f'{self.author.username} : {self.content}'
+        elif self.file:
+            return f'{self.author.username} : {self.filename}'
     
     class Meta:
         ordering = ['-timestamp']
+    
+    @property    
+    def is_image(self):
+        try:
+            image = Image.open(self.file) 
+            image.verify()
+            return True 
+        except:
+            return False
+    
     
 
