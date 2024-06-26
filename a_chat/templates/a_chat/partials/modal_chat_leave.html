@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leave Chat</title>
+    <style>
+        [x-cloak] {
+            display: none;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.2.2/dist/cdn.min.js"></script>
+</head>
+<body>
+<div x-data="{ modal_open: false }">
+    <!-- Button to open the modal -->
+    <button @click="modal_open = true" class="button-red">Leave Chat</button>
+
+    <!-- Modal -->
+    <div x-show="modal_open" x-cloak>
+        <div class="fixed inset-0 bg-gray-800 bg-opacity-50"></div>
+        <div class="fixed inset-0 z-50 flex justify-center items-center p-6">
+            <div @click.away="modal_open = false" class="rounded-lg bg-white text-left shadow-xl p-6">
+                <h1 class="text-xl font-bold mb-4">Leave this chat?</h1>
+                <form method="POST" action="{% url 'chatroom-leave' chat_group.group_name %}">
+                    {% csrf_token %}
+                    <button type="submit" class="button-red mt-4">Yes, I want to leave</button>
+                    <button type="button" @click="modal_open = false" class="button button-gray ml-1">Cancel</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
