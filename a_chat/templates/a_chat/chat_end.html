@@ -84,7 +84,7 @@
         </div>
     </div>
     {% if chat_group.members.exists %}
-    <a href="{% url 'chatroom-leave' chatroom_name %}">
+    <a href="{% url 'chatroom-leave' chat_group.group_name %}">
         {% include 'a_chat/partials/modal_chat_leave.html' %}
     </a> 
     {% endif %}

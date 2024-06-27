@@ -165,6 +165,8 @@ def chatroom_leave_view(request, chatroom_name):
         messages.success(request, 'You left the Chat')
         return redirect('home')
     
+    return render(request, 'a_chat/partials/modal_chat_leave.html', {'chat_group':chat_group_instance})
+    
     
 def chat_file_upload(request, chatroom_name):
     chat_group_instance = get_object_or_404(chat_group, group_name=chatroom_name)
